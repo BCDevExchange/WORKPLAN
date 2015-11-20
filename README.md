@@ -2,7 +2,7 @@
 WorkPlan.Gov - A web application for local municipal governments' work plan & capacity analysis 
 
 ## Features
-This web application has been developed for time and project management for numicipal government staff. This tool offers a concise method for creating, implementing and tracking Municipal Projects and the requisite tasks and time commitments associated. 
+This web application has been developed for time and project management for numicipal government staff. This tool offers a concise method for creating, implementing and tracking Municipal Projects and the requisite tasks and time commitments associated. See http://workplan.civicinfo.bc.ca for demo (use admin/admin for login). 
 
 
 ## Message from the CAO of City of Courtenay
@@ -16,13 +16,15 @@ City of Courtenay
 Co-Chair, Asset Management BC
 www.courtenay.ca 
 
+
 ## Requirements
-The source code for initial commit was tested in the following environment:
+The source code for the initial commit was developed and tested in the following environment:
    OS: Debian GNU Linux 6 (64-bit)
    Web server: Apache/2.2.22 (Debian)
    Database: MySQL 5.5.40-0+wheezy1
-   PHP: Ver 5.4.35-0+deb7u2
+   PHP: Ver 5.4.35-0+deb7u2 .
 
+   
 ## Installation
 WorkPlan.Gov setup
 basic instructions for a linux server.
