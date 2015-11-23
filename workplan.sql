@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.21, for Win32 (x86)
 --
--- Host: 192.168.1.25    Database: workplan
+-- Host: x.x.x.x    Database: workplan
 -- ------------------------------------------------------
 -- Server version	5.5.40-0+wheezy1
 

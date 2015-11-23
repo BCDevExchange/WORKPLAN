@@ -18,7 +18,7 @@ www.courtenay.ca
 
 
 ## Requirements
-The source code for the initial commit was developed and tested in the following environment:
+The source code for the initial commit was tested in the following environment:
    OS: Debian GNU Linux 6 (64-bit)
    Web server: Apache/2.2.22 (Debian)
    Database: MySQL 5.5.40-0+wheezy1
