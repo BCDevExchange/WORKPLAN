@@ -10,20 +10,20 @@ While strategic planning is being increasingly implemented in Local Government, 
 
 In a time of increasing demand for “Value for Money” in Local Government, as demonstrated by the creation of an Auditor General for Local Government in 2012, estimating and tracking corporate capacity enhances the use of scarce human and financial resources, and provides greater transparency, municipal performance measurement, and reporting.
 
-David Allen
-Chief Administrative Officer
-City of Courtenay
-Co-Chair, Asset Management BC
-www.courtenay.ca 
+David Allen  
+Chief Administrative Officer  
+City of Courtenay  
+Co-Chair, Asset Management BC  
+www.courtenay.ca  
 
 
 ## Requirements
-The source code for the initial commit was tested in the following environment:
-   OS: Debian GNU Linux 6 (64-bit)
-   Web server: Apache/2.2.22 (Debian)
-   Database: MySQL 5.5.40-0+wheezy1
-   PHP: Ver 5.4.35-0+deb7u2 .
-
+The source code for the initial commit was tested in the following environment:  
+   OS: Debian GNU Linux 6 (64-bit)  
+   Web server: Apache/2.2.22 (Debian)  
+   Database: MySQL 5.5.40-0+wheezy1  
+   PHP: Ver 5.4.35-0+deb7u2 .  
+   
    
 ## Installation
 WorkPlan.Gov setup
@@ -60,28 +60,27 @@ workplan/components/templates/custom_templates
 
 
 ## License
-WorkPlan.Gov License Agreement
-Copyright (c) 2013 - 2015, City of Courtenay.
-All rights reserved.
+WorkPlan.Gov License Agreement  
+Copyright (c) 2013 - 2015, City of Courtenay.  
+All rights reserved.  
 
-This license is a legal agreement between you and City of Courtenay, for the use of WorkPlan.Gov Software (the "Software"). By obtaining the Software you agree to comply with the terms and conditions of this license.
-Permitted Use
-You are permitted to use, copy, modify, the Software and its documentation, with or without modification, for any purpose, provided that the following conditions are met:
-1.	A copy of this license agreement must be included with the distribution.
-2.	Source code must retain the above copyright notice in all source code files.
-3.	Any files that have been modified must carry notices stating the nature of the change and the names of those who changed them.
-4.	The Software shall not be published, propagated, distributed, sublicensed, and/or sold without expressed permission from the City of Courtenay.
-
-Indemnity
-You agree to indemnify and hold harmless the authors of the Software and any contributors for any direct, indirect, incidental, or consequential third-party claims, 
-actions or suits, as well as any related expenses, liabilities, damages, settlements or fees arising from your use or misuse of the Software, or a violation of any terms of this license.
-Disclaimer of Warranty
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF QUALITY, PERFORMANCE, NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
-
-Limitations of Liability
-YOU ASSUME ALL RISK ASSOCIATED WITH THE INSTALLATION AND USE OF THE SOFTWARE. 
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS OF THE SOFTWARE BE LIABLE FOR CLAIMS, DAMAGES OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE. 
+This license is a legal agreement between you and City of Courtenay, for the use of WorkPlan.Gov Software (the "Software"). By obtaining the Software you agree to comply with the terms and conditions of this license.  
+Permitted Use  
+You are permitted to use, copy, modify, the Software and its documentation, with or without modification, for any purpose, provided that the following conditions are met:  
+1.	A copy of this license agreement must be included with the distribution.  
+2.	Source code must retain the above copyright notice in all source code files.  
+3.	Any files that have been modified must carry notices stating the nature of the change and the names of those who changed them.  
+4.	The Software shall not be published, propagated, distributed, sublicensed, and/or sold without expressed permission from the City of Courtenay.  
+  
+Indemnity  
+You agree to indemnify and hold harmless the authors of the Software and any contributors for any direct, indirect, incidental, or consequential third-party claims,  
+actions or suits, as well as any related expenses, liabilities, damages, settlements or fees arising from your use or misuse of the Software, or a violation of any terms of this license.  
+Disclaimer of Warranty  
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF QUALITY, PERFORMANCE, NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.  
+  
+Limitations of Liability  
+YOU ASSUME ALL RISK ASSOCIATED WITH THE INSTALLATION AND USE OF THE SOFTWARE.  
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS OF THE SOFTWARE BE LIABLE FOR CLAIMS, DAMAGES OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE.  
 LICENSE HOLDERS ARE SOLELY RESPONSIBLE FOR DETERMINING THE APPROPRIATENESS OF USE AND ASSUME ALL RISKS ASSOCIATED WITH ITS USE, 
-INCLUDING BUT NOT LIMITED TO THE RISKS OF PROGRAM ERRORS, DAMAGE TO EQUIPMENT, LOSS OF DATA OR SOFTWARE PROGRAMS, OR UNAVAILABILITY OR INTERRUPTION OF OPERATIONS.
-   
+INCLUDING BUT NOT LIMITED TO THE RISKS OF PROGRAM ERRORS, DAMAGE TO EQUIPMENT, LOSS OF DATA OR SOFTWARE PROGRAMS, OR UNAVAILABILITY OR INTERRUPTION OF OPERATIONS.  
 
