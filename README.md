@@ -11,8 +11,7 @@ While strategic planning is being increasingly implemented in Local Government, 
 In a time of increasing demand for “Value for Money” in Local Government, as demonstrated by the creation of an Auditor General for Local Government in 2012, estimating and tracking corporate capacity enhances the use of scarce human and financial resources, and provides greater transparency, municipal performance measurement, and reporting.
 
 David Allen  
-Chief Administrative Officer  
-City of Courtenay  
+Chief Administrative Officer, City of Courtenay  
 Co-Chair, Asset Management BC  
 www.courtenay.ca  
 
@@ -65,6 +64,7 @@ Copyright (c) 2013 - 2015, City of Courtenay.
 All rights reserved.  
 
 This license is a legal agreement between you and City of Courtenay, for the use of WorkPlan.Gov Software (the "Software"). By obtaining the Software you agree to comply with the terms and conditions of this license.  
+  
 Permitted Use  
 You are permitted to use, copy, modify, the Software and its documentation, with or without modification, for any purpose, provided that the following conditions are met:  
 1.	A copy of this license agreement must be included with the distribution.  
