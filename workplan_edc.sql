@@ -386,6 +386,7 @@ UNLOCK TABLES;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
+
 /*!50001 VIEW `ProjectView` AS select `p`.`project_id` AS `project_id`,`m`.`program_name` AS `project_type`,`p`.`project_name` AS `project_name`,`p`.`date_start` AS `date_start`,`p`.`date_end` AS `date_end`,`p`.`year` AS `year`,'' AS `Objective`,`p`.`priority` AS `priority`,`s`.`username` AS `project_lead`,`p`.`approved_budget` AS `approved_budget`,`p`.`budget_spent` AS `budget_spent`,`p`.`multi_year` AS `multi_year`,`p`.`public_engagement` AS `public_engagement`,`p`.`level_of_service` AS `level_of_service`,`p`.`approved` AS `approved_by_cao`,ifnull(`p`.`progress`,0) AS `progress`,`d`.`DEPARTMENT` AS `DEPARTMENT`,ifnull(sum(`i`.`hours`),0) AS `total_hours`,ifnull(sum(`t`.`hrs`),0) AS `assigned_hours`,(1 - ifnull(`p`.`progress`,0)) AS `assigned_progress` from (((((`project` `p` left join `program` `m` on((`p`.`programm_id` = `m`.`program_id`))) left join `staff` `s` on((`p`.`lead` = `s`.`staff_id`))) left join `department` `d` on((`p`.`dept_id` = `d`.`DEPT_ID`))) left join `task` `t` on((`t`.`project_id` = `p`.`project_id`))) left join `timesheet` `i` on((`t`.`task_id` = `i`.`task_id`))) group by `p`.`project_id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;

@@ -2,7 +2,7 @@
 WorkPlan.Gov - A web application for local municipal governments' work plan & capacity analysis 
 
 ## Features
-This web application has been developed for time and project management for numicipal government staff. This tool offers a concise method for creating, implementing and tracking Municipal Projects and the requisite tasks and time commitments associated. See http://workplan.civicinfo.bc.ca for demo (use admin/admin for login). 
+This web application has been developed for time and project management for numicipal government staff. This tool offers a concise method for creating, implementing and tracking Municipal Projects and the requisite tasks and time commitments associated. See http://courtenay.city/workplan for demo. 
 
 
 ## Message from the CAO of City of Courtenay
@@ -39,9 +39,6 @@ once done browse to http://yourserver/workplan/
 if you run into the infamous "white screen" you can comment out debug level on line 4 in settings.php
 
 you can log in with :
-
-user: admin
-psswd: admin
 
 user: Manager One
 psswd: manager1
