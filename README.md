@@ -2,7 +2,7 @@
 WorkPlan.Gov - A web application for local municipal governments' work plan & capacity analysis 
 
 ## Features
-This web application has been developed for time and project management for numicipal government staff. This tool offers a concise method for creating, implementing and tracking Municipal Projects and the requisite tasks and time commitments associated. See http://courtenay.city/workplan for demo. 
+This web application has been developed for time and project management for numicipal government staff. This tool offers a concise method for creating, implementing and tracking Municipal Projects and the requisite tasks and time commitments associated. See http://courtenay.city/workplan for demo (use username:Manager One password:manager1). 
 
 
 ## Message from the CAO of City of Courtenay
