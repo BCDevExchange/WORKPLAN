@@ -32,7 +32,7 @@ Create a Database called "workplan" and restore the database schema to it with t
 unzip the workplan archive to your webserver and chmod 777 the templates_c directory.
 you will need the php-gd libraries if you want to upload user pictures and chmod 777 the images directory.
 
-edit the app_settings.php around line 22 to reflect your mysql settings.
+edit the phpgen_settings.php around line 21 to reflect your mysql settings.
 you can also modify the header text, Logo and footer text.
 
 once done browse to http://yourserver/workplan/
