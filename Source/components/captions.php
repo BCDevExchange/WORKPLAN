@@ -38,7 +38,7 @@ else
 }
 ob_end_clean();
 
-include_once("app_settings.php");
+include_once("phpgen_settings.php");
 include_once("components/utils/string_utils.php");
 
 class Captions

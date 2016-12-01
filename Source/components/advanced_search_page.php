@@ -1,12 +1,12 @@
 <?php
 
-// require_once 'app_settings.php';
+// require_once 'phpgen_settings.php';
 // require_once 'components/utils/string_utils.php';
 // require_once 'components/superglobal_wrapper.php';
 // require_once 'components/renderers/renderer.php';
 // require_once 'components/editors/editors.php';
 
-include_once dirname(__FILE__) . '/' . '../app_settings.php';
+include_once dirname(__FILE__) . '/' . '../phpgen_settings.php';
 include_once dirname(__FILE__) . '/' . 'utils/string_utils.php';
 include_once dirname(__FILE__) . '/' . 'superglobal_wrapper.php';
 include_once dirname(__FILE__) . '/' . 'renderers/renderer.php';
@@ -293,12 +293,18 @@ abstract class SearchColumn {
         }
         if (isset($result) && $this->applyNotOperator)
             $result = new NotPredicateFilter($result);
+
         return $result;
     }
 
     private function createFieldFilter($condition, $usePrefix = false, $useSuffix = false){
         $filterStr = EnvVariablesUtils::EvaluateVariableTemplate(
             $this->variableContainer, $this->getFilterValueForDataset());
+
+        if ($usePrefix || $useSuffix) {
+            $filterStr = str_replace('%', '\%', addslashes($filterStr));
+        }
+
         if ($usePrefix)
             $filterStr = '%'.$filterStr;
         if ($useSuffix)
@@ -1125,8 +1131,10 @@ class AdvancedSearchControl {
                 ($column->GetActiveFilterIndex() == 'STARTS') ||
                 ($column->GetActiveFilterIndex() == 'ENDS') ||
                 ($column->GetActiveFilterIndex() == 'CONTAINS')
-                ))
-                $result[] = str_replace('%', '', $column->GetFilterValue());
+                )) {
+                $result[] = $column->GetFilterValue();
+            }
+
         return $result;
     }
 

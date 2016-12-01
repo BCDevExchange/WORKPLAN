@@ -43,20 +43,15 @@
 
         {* <CustomTemplate> *}
         <li class="nav-header shift-down">Quick links</li>
-        <li><a class="external" href="http://www.courtenay.ca/" target="_blank"><i class="external"></i>City of Courtenay Website</a></li>
-        <li><a class="external" href="http://http://www.municipalinfonet.com" target="_blank"><i class="external nba"></i>Municipal Information Network</a></li>
-	<li><a class="external" href="documents/quicklinks.html" target="_blank"><i class="external"></i>Edit this Template</a></li>
-
         {* </CustomTemplate> *}
 
 
 {* <CustomTemplate> *}
         <li class="nav-header shift-down">Resources</li>
-        <li><a class="external" href="http://www.pac.bluecross.ca/" target="_blank"><i class="external"></i>Pacific Blue Cross</a></li>
         <li><a class="external" href="http://www.civicinfo.bc.ca/" target="_blank"><i class="external nba"></i>Civicinfo</a></li>
-	<li><a class="external" href="http://www.theweathernetwork.com/" target="_blank"><i class="external"></i>The Weather Network</a></li>
-	
-        {* </CustomTemplate> *}
+		<li><a class="external" href="https://www.facebook.com/cityofcourtenay" target="_blank"><i class="external maestro"></i>Facebook</a></li>
+		<li><a class="external" href="https://www.twitter.com/cityofcourtenay" target="_blank"><i class="external maestro"></i>Twitter</a></li>
+{* </CustomTemplate> *}
 
     </ul>
 </div>

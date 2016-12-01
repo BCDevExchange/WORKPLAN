@@ -1,6 +1,6 @@
 <?php
 
-require_once 'app_settings.php';
+require_once 'phpgen_settings.php';
 require_once 'components/security/security_info.php';
 require_once 'components/security/datasource_security_info.php';
 require_once 'components/security/tablebased_auth.php';
@@ -65,7 +65,10 @@ $tableCaptions = array('Dashboard' => 'Dashboard',
 'department_projects' => 'Department Projects',
 'department_projects.task' => 'Department Projects.Gantt view',
 'department_projects.project' => 'Department Projects.Project Budget Chart',
-'ProjectView' => 'ProjectView');
+'pay_period' => 'Pay Period Admin',
+'ProjectView' => 'ProjectView',
+'Multiple Time Entry' => 'Multiple Time Entry',
+'taskview' => 'Taskview');
 
 function CreateTableBasedGrantsManager()
 {
@@ -73,7 +76,7 @@ function CreateTableBasedGrantsManager()
     $usersTable = array('TableName' => 'staff', 'UserName' => 'username', 'UserId' => 'staff_id', 'Password' => 'password');
     $userPermsTable = array('TableName' => 'user_permissions', 'UserId' => 'user_id', 'PageName' => 'page_name', 'Grant' => 'perm_name');
 
-    $passwordHasher = HashUtils::CreateHasher('');
+    $passwordHasher = HashUtils::CreateHasher('SHA256');
     $connectionOptions = GetGlobalConnectionOptions();
     $tableBasedGrantsManager = new TableBasedUserGrantsManager(new MyConnectionFactory(), $connectionOptions,
         $usersTable, $userPermsTable, $tableCaptions, $passwordHasher, false);
@@ -102,7 +105,7 @@ function SetUpUserAuthorization()
 
 function GetIdentityCheckStrategy()
 {
-    return new TableBasedIdentityCheckStrategy(new MyConnectionFactory(), GetGlobalConnectionOptions(), 'staff', 'username', 'password', '');
+    return new TableBasedIdentityCheckStrategy(new MyConnectionFactory(), GetGlobalConnectionOptions(), 'staff', 'username', 'password', 'SHA256');
 }
 
 function CanUserChangeOwnPassword()

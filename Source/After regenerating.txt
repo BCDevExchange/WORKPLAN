@@ -1,0 +1,5 @@
+After WorkPlan is re-generated from PHPGenerator:
+Search the following string "SetReadOnly(true, GetApplication()->GetCurrentUserId" in three files and change 'true' to 'false':
+	- project.php (2 occurrences)
+	- department_project.php (3)
+	- task.php (3) 

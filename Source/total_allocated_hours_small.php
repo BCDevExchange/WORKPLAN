@@ -1,27 +1,10 @@
 <?php
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * WorkPlan License Agreement
- * Copyright (c) 2013 - 2015, City of Courtenay.
- * All rights reserved.
- * 
- * This license is a legal agreement between you and City of Courtenay, for the use of WorkPlan.Gov Software (the "Software"). By obtaining the Software you agree to comply with the terms and conditions of this license.
- * Permitted Use
- * You are permitted to use, copy, modify, the Software and its documentation, with or without modification, for any purpose, provided that the following conditions are met:
- * 1.	A copy of this license agreement must be included with the distribution.
- * 2.	Source code must retain the above copyright notice in all source code files.
- * 3.	Any files that have been modified must carry notices stating the nature of the change and the names of those who changed them.
- * 4.	The Software shall not be published, propagated, distributed, sublicensed, and/or sold without expressed permission from the City of Courtenay.
- * 
- * Indemnity
- * You agree to indemnify and hold harmless the authors of the Software and any contributors for any direct, indirect, incidental, or consequential third-party claims, 
- * actions or suits, as well as any related expenses, liabilities, damages, settlements or fees arising from your use or misuse of the Software, or a violation of any terms of this license.
- * Disclaimer of Warranty
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF QUALITY, PERFORMANCE, NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
- * Limitations of Liability
- * YOU ASSUME ALL RISK ASSOCIATED WITH THE INSTALLATION AND USE OF THE SOFTWARE. 
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS OF THE SOFTWARE BE LIABLE FOR CLAIMS, DAMAGES OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE. 
- * LICENSE HOLDERS ARE SOLELY RESPONSIBLE FOR DETERMINING THE APPROPRIATENESS OF USE AND ASSUME ALL RISKS ASSOCIATED WITH ITS USE, 
- * INCLUDING BUT NOT LIMITED TO THE RISKS OF PROGRAM ERRORS, DAMAGE TO EQUIPMENT, LOSS OF DATA OR SOFTWARE PROGRAMS, OR UNAVAILABILITY OR INTERRUPTION OF OPERATIONS.
+ *                                   ATTENTION!
+ * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
+ * this means that PHP is not properly installed on your web server. Please refer to the PHP manual
+ * for more details: http://php.net/manual/install.php 
+ *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 
@@ -31,7 +14,7 @@
     CheckTemplatesCacheFolderIsExistsAndWritable();
 
 
-    include_once dirname(__FILE__) . '/' . 'app_settings.php';
+    include_once dirname(__FILE__) . '/' . 'phpgen_settings.php';
     include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
     include_once dirname(__FILE__) . '/' . 'components/page.php';
     include_once dirname(__FILE__) . '/' . 'authorization.php';
@@ -125,10 +108,12 @@
                 $result->AddPage(new PageLink($this->RenderText('View Pay Period'), 'View_Pay_Period.php', $this->RenderText(''), $currentPageCaption == $this->RenderText('View Pay Period'), false, $this->RenderText('Default')));
             if (GetCurrentUserGrantForDataSource('department_projects')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Department Projects'), 'department_projects.php', $this->RenderText('Department Projects'), $currentPageCaption == $this->RenderText('Department Projects'), false, $this->RenderText('Default')));
+            if (GetCurrentUserGrantForDataSource('Multiple Time Entry')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Multiple Time Entry'), 'multiple_time_entry.php', $this->RenderText('Multiple Time Entry'), $currentPageCaption == $this->RenderText('Multiple Time Entry'), false, $this->RenderText('Default')));
             
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() ) {
               $result->AddGroup('Admin area');
-              $result->AddPage(new PageLink($this->GetLocalizerCaptions()->GetMessageString('AdminPage'), 'app_admin.php', $this->GetLocalizerCaptions()->GetMessageString('AdminPage'), false, false, 'Admin area'));
+              $result->AddPage(new PageLink($this->GetLocalizerCaptions()->GetMessageString('AdminPage'), 'phpgen_admin.php', $this->GetLocalizerCaptions()->GetMessageString('AdminPage'), false, false, 'Admin area'));
             }
             return $result;
         }
@@ -426,7 +411,7 @@
             $this->SetHidePageListByDefault(false);
             $this->SetExportToExcelAvailable(false);
             $this->SetExportToWordAvailable(false);
-            $this->SetExportToXmlAvailable(false);
+            $this->SetExportToXmlAvailable(true);
             $this->SetExportToCsvAvailable(false);
             $this->SetExportToPdfAvailable(false);
             $this->SetPrinterFriendlyAvailable(false);

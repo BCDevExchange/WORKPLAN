@@ -1,5 +1,5 @@
 
-<img src="images/bwlogo_wide.jpg"> <b>Timesheet</b><p>
+<img src="images/bwlogo_wide.jpg"> <b>City of Courtenay Timesheet</b><p>
 
 <table align="center" width="90%" border="0" cellpadding="3" cellspacing="3">
     <tr valign="top">
@@ -7,12 +7,12 @@
 
 
 <tr valign="top">
-<td bgcolor="#D3D3D3" style="width:100px">Name: </td><td><b>{$Rows[1][0]}</b></td>
-    <td bgcolor="#D3D3D3" style="width:100px"> EMP# </td><td><b>{$Rows[1][7]}</b></td>
+<td bgcolor="#D3D3D3" style="width:100px">Name: </td><td><b>{$Rows[0][0]}</b></td>
+    <td bgcolor="#D3D3D3" style="width:100px"> EMP# </td><td><b>{$Rows[0][7]}</b></td>
 <tr valign="top">
-<td bgcolor="#D3D3D3" style="width:100px">Pay Period</td><td> <b>{$Rows[1][4]}</b></td>
+<td bgcolor="#D3D3D3" style="width:100px">Pay Period</td><td> <b>{$Rows[0][4]}</b></td>
     
-    <td bgcolor="#D3D3D3" style="width:100px">Position:</td><td> <b>{$Rows[1][6]}</b></td>
+    <td bgcolor="#D3D3D3" style="width:100px">Position:</td><td> <b>{$Rows[0][6]}</b></td>
 
 
 </tr></tr>

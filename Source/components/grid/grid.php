@@ -1621,6 +1621,16 @@ class Grid {
         return $result;
     }
 
+    public function GetDetailsViewData()
+    {
+        $result = array();
+        foreach ($this->details as $detail) {
+            $result[] = $detail->GetViewData();
+        }
+
+        return $result;
+    }
+
     public function FindDetail($detailEditHandlerName) {
         foreach ($this->details as $detail) {
             if ($detail->GetSeparatePageHandlerName() == $detailEditHandlerName)

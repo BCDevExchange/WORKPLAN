@@ -12,7 +12,7 @@ include_once dirname(__FILE__) . '/' . 'components/utils/check_utils.php';
 CheckPHPVersion();
 CheckTemplatesCacheFolderIsExistsAndWritable();
 
-include_once dirname(__FILE__) . '/' . 'app_settings.php';
+include_once dirname(__FILE__) . '/' . 'phpgen_settings.php';
 include_once dirname(__FILE__) . '/' . 'components/page.php';
 include_once dirname(__FILE__) . '/' . 'components/renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . 'components/renderers/list_renderer.php';

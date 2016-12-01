@@ -1,27 +1,10 @@
 <?php
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * WorkPlan License Agreement
- * Copyright (c) 2013 - 2015, City of Courtenay.
- * All rights reserved.
- * 
- * This license is a legal agreement between you and City of Courtenay, for the use of WorkPlan.Gov Software (the "Software"). By obtaining the Software you agree to comply with the terms and conditions of this license.
- * Permitted Use
- * You are permitted to use, copy, modify, the Software and its documentation, with or without modification, for any purpose, provided that the following conditions are met:
- * 1.	A copy of this license agreement must be included with the distribution.
- * 2.	Source code must retain the above copyright notice in all source code files.
- * 3.	Any files that have been modified must carry notices stating the nature of the change and the names of those who changed them.
- * 4.	The Software shall not be published, propagated, distributed, sublicensed, and/or sold without expressed permission from the City of Courtenay.
- * 
- * Indemnity
- * You agree to indemnify and hold harmless the authors of the Software and any contributors for any direct, indirect, incidental, or consequential third-party claims, 
- * actions or suits, as well as any related expenses, liabilities, damages, settlements or fees arising from your use or misuse of the Software, or a violation of any terms of this license.
- * Disclaimer of Warranty
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF QUALITY, PERFORMANCE, NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
- * Limitations of Liability
- * YOU ASSUME ALL RISK ASSOCIATED WITH THE INSTALLATION AND USE OF THE SOFTWARE. 
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS OF THE SOFTWARE BE LIABLE FOR CLAIMS, DAMAGES OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE. 
- * LICENSE HOLDERS ARE SOLELY RESPONSIBLE FOR DETERMINING THE APPROPRIATENESS OF USE AND ASSUME ALL RISKS ASSOCIATED WITH ITS USE, 
- * INCLUDING BUT NOT LIMITED TO THE RISKS OF PROGRAM ERRORS, DAMAGE TO EQUIPMENT, LOSS OF DATA OR SOFTWARE PROGRAMS, OR UNAVAILABILITY OR INTERRUPTION OF OPERATIONS.
+ *                                   ATTENTION!
+ * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
+ * this means that PHP is not properly installed on your web server. Please refer to the PHP manual
+ * for more details: http://php.net/manual/install.php 
+ *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 
@@ -31,7 +14,7 @@
     CheckTemplatesCacheFolderIsExistsAndWritable();
 
 
-    include_once dirname(__FILE__) . '/' . 'app_settings.php';
+    include_once dirname(__FILE__) . '/' . 'phpgen_settings.php';
     include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
     include_once dirname(__FILE__) . '/' . 'components/page.php';
     include_once dirname(__FILE__) . '/' . 'authorization.php';
@@ -82,7 +65,6 @@
               $field->SetReadOnly(true, GetApplication()->GetCurrentUserId());
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('task_id', 'task', new IntegerField('task_id', null, null, true), new StringField('task_name', 'task_id_task_name', 'task_id_task_name_task'), 'task_id_task_name_task');
         }
     
         protected function DoPrepare() {
@@ -127,10 +109,12 @@
                 $result->AddPage(new PageLink($this->RenderText('View Pay Period'), 'View_Pay_Period.php', $this->RenderText(''), $currentPageCaption == $this->RenderText('View Pay Period'), false, $this->RenderText('Default')));
             if (GetCurrentUserGrantForDataSource('department_projects')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Department Projects'), 'department_projects.php', $this->RenderText('Department Projects'), $currentPageCaption == $this->RenderText('Department Projects'), false, $this->RenderText('Default')));
+            if (GetCurrentUserGrantForDataSource('Multiple Time Entry')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Multiple Time Entry'), 'multiple_time_entry.php', $this->RenderText('Multiple Time Entry'), $currentPageCaption == $this->RenderText('Multiple Time Entry'), false, $this->RenderText('Default')));
             
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() ) {
               $result->AddGroup('Admin area');
-              $result->AddPage(new PageLink($this->GetLocalizerCaptions()->GetMessageString('AdminPage'), 'app_admin.php', $this->GetLocalizerCaptions()->GetMessageString('AdminPage'), false, false, 'Admin area'));
+              $result->AddPage(new PageLink($this->GetLocalizerCaptions()->GetMessageString('AdminPage'), 'phpgen_admin.php', $this->GetLocalizerCaptions()->GetMessageString('AdminPage'), false, false, 'Admin area'));
             }
             return $result;
         }
@@ -144,7 +128,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('timesheetssearch', $this->dataset,
-                array('name', 'task_id_task_name', 'hours', 'notes', 'date'),
+                array('name', 'task_id', 'hours', 'notes', 'date'),
                 array($this->RenderText('Name'), $this->RenderText('Task'), $this->RenderText('Hours'), $this->RenderText('Notes'), $this->RenderText('Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -166,36 +150,7 @@
             $this->AdvancedSearchControl = new AdvancedSearchControl('timesheetasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
-            
-            $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
-                GetConnectionOptions(),
-                '`task`');
-            $field = new IntegerField('task_id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new IntegerField('project_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('assigned_to');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('date_start');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('date_end');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('task_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notes');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('hrs');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('wo');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('staff_id');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('task_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), '  task.assigned_to=%CURRENT_USER_ID%'));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('task_id', $this->RenderText('Task'), $lookupDataset, 'task_id', 'task_name', false, 8));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('task_id', $this->RenderText('Task')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('hours', $this->RenderText('Hours')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notes', $this->RenderText('Notes')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('date', $this->RenderText('Date'), 'Y-m-d'));
@@ -224,8 +179,8 @@
                 $grid->AddViewColumn($column, $actionsBandName);
                 $column->SetImagePath('images/delete_action.png');
                 $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
-            $column->SetAdditionalAttribute("data-modal-delete", "true");
-            $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
+                $column->SetAdditionalAttribute('data-modal-delete', 'true');
+                $column->SetAdditionalAttribute('data-delete-handler-name', $this->GetModalGridDeleteHandler());
             }
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
@@ -249,9 +204,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for task_name field
+            // View column for task_id field
             //
-            $column = new TextViewColumn('task_id_task_name', 'Task', $this->dataset);
+            $column = new TextViewColumn('task_id', 'Task', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
@@ -301,9 +256,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for task_name field
+            // View column for task_id field
             //
-            $column = new TextViewColumn('task_id_task_name', 'Task', $this->dataset);
+            $column = new TextViewColumn('task_id', 'Task', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -410,38 +365,7 @@
             
             GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset0, 'project_id', 'project_name', null, ArrayWrapper::createGetWrapper()));
             $level = $editor->AddLevel($dataset0, 'project_id', 'project_name', $this->RenderText('Project'), null, ArrayWrapper::createGetWrapper());
-            
-            $dataset1 = new TableDataset(
-                new MyConnectionFactory(),
-                GetConnectionOptions(),
-                '`task`');
-            $field = new IntegerField('task_id', null, null, true);
-            $field->SetIsNotNull(true);
-            $dataset1->AddField($field, true);
-            $field = new IntegerField('project_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('assigned_to');
-            $dataset1->AddField($field, false);
-            $field = new DateField('date_start');
-            $dataset1->AddField($field, false);
-            $field = new DateField('date_end');
-            $dataset1->AddField($field, false);
-            $field = new StringField('task_name');
-            $dataset1->AddField($field, false);
-            $field = new StringField('notes');
-            $field->SetIsNotNull(true);
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('hrs');
-            $dataset1->AddField($field, false);
-            $field = new StringField('wo');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('staff_id');
-            $dataset1->AddField($field, false);
-            $dataset1->SetOrderBy('task_name', GetOrderTypeAsSQL(otAscending));
-            
-            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset1, 'task_id', 'task_name', new ForeignKeyInfo('project_id', 'project_id'), ArrayWrapper::createGetWrapper()));
-            $level = $editor->AddLevel($dataset1, 'task_id', 'task_name', $this->RenderText('Task'), new ForeignKeyInfo('project_id', 'project_id'), ArrayWrapper::createGetWrapper());
-            $editColumn = new MultiLevelLookupEditColumn('Task', 'task_id', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Task', 'task_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -558,38 +482,7 @@
             
             GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset0, 'project_id', 'project_name', null, ArrayWrapper::createGetWrapper()));
             $level = $editor->AddLevel($dataset0, 'project_id', 'project_name', $this->RenderText('Project'), null, ArrayWrapper::createGetWrapper());
-            
-            $dataset1 = new TableDataset(
-                new MyConnectionFactory(),
-                GetConnectionOptions(),
-                '`task`');
-            $field = new IntegerField('task_id', null, null, true);
-            $field->SetIsNotNull(true);
-            $dataset1->AddField($field, true);
-            $field = new IntegerField('project_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('assigned_to');
-            $dataset1->AddField($field, false);
-            $field = new DateField('date_start');
-            $dataset1->AddField($field, false);
-            $field = new DateField('date_end');
-            $dataset1->AddField($field, false);
-            $field = new StringField('task_name');
-            $dataset1->AddField($field, false);
-            $field = new StringField('notes');
-            $field->SetIsNotNull(true);
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('hrs');
-            $dataset1->AddField($field, false);
-            $field = new StringField('wo');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('staff_id');
-            $dataset1->AddField($field, false);
-            $dataset1->SetOrderBy('task_name', GetOrderTypeAsSQL(otAscending));
-            
-            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset1, 'task_id', 'task_name', new ForeignKeyInfo('project_id', 'project_id'), ArrayWrapper::createGetWrapper()));
-            $level = $editor->AddLevel($dataset1, 'task_id', 'task_name', $this->RenderText('Task'), new ForeignKeyInfo('project_id', 'project_id'), ArrayWrapper::createGetWrapper());
-            $editColumn = new MultiLevelLookupEditColumn('Task', 'task_id', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Task', 'task_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -649,9 +542,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for task_name field
+            // View column for task_id field
             //
-            $column = new TextViewColumn('task_id_task_name', 'Task', $this->dataset);
+            $column = new TextViewColumn('task_id', 'Task', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -688,9 +581,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for task_name field
+            // View column for task_id field
             //
-            $column = new TextViewColumn('task_id_task_name', 'Task', $this->dataset);
+            $column = new TextViewColumn('task_id', 'Task', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -816,7 +709,7 @@
             $this->SetHidePageListByDefault(false);
             $this->SetExportToExcelAvailable(true);
             $this->SetExportToWordAvailable(true);
-            $this->SetExportToXmlAvailable(false);
+            $this->SetExportToXmlAvailable(true);
             $this->SetExportToCsvAvailable(true);
             $this->SetExportToPdfAvailable(true);
             $this->SetPrinterFriendlyAvailable(true);

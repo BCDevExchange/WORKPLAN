@@ -22,7 +22,7 @@ function GetGlobalConnectionOptions()
   'port' => '3306',
   'username' => 'root',
   'password' => 'root',
-  'database' => 'workplan'
+  'database' => 'WP20_OUT'
 );
 }
 
@@ -51,6 +51,7 @@ function GetPageInfos()
     $result[] = array('caption' => 'Task Names', 'short_caption' => 'Task Names', 'filename' => 'task_names.php', 'name' => 'task_names', 'group_name' => 'Default', 'add_separator' => false);
     $result[] = array('caption' => 'View Pay Period', 'short_caption' => '', 'filename' => 'View_Pay_Period.php', 'name' => 'View Pay Period', 'group_name' => 'Default', 'add_separator' => false);
     $result[] = array('caption' => 'Department Projects', 'short_caption' => 'Department Projects', 'filename' => 'department_projects.php', 'name' => 'department_projects', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => 'Multiple Time Entry', 'short_caption' => 'Multiple Time Entry', 'filename' => 'multiple_time_entry.php', 'name' => 'Multiple Time Entry', 'group_name' => 'Default', 'add_separator' => false);
     return $result;
 }
 

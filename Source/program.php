@@ -1,27 +1,10 @@
 <?php
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * WorkPlan License Agreement
- * Copyright (c) 2013 - 2015, City of Courtenay.
- * All rights reserved.
- * 
- * This license is a legal agreement between you and City of Courtenay, for the use of WorkPlan.Gov Software (the "Software"). By obtaining the Software you agree to comply with the terms and conditions of this license.
- * Permitted Use
- * You are permitted to use, copy, modify, the Software and its documentation, with or without modification, for any purpose, provided that the following conditions are met:
- * 1.	A copy of this license agreement must be included with the distribution.
- * 2.	Source code must retain the above copyright notice in all source code files.
- * 3.	Any files that have been modified must carry notices stating the nature of the change and the names of those who changed them.
- * 4.	The Software shall not be published, propagated, distributed, sublicensed, and/or sold without expressed permission from the City of Courtenay.
- * 
- * Indemnity
- * You agree to indemnify and hold harmless the authors of the Software and any contributors for any direct, indirect, incidental, or consequential third-party claims, 
- * actions or suits, as well as any related expenses, liabilities, damages, settlements or fees arising from your use or misuse of the Software, or a violation of any terms of this license.
- * Disclaimer of Warranty
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF QUALITY, PERFORMANCE, NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
- * Limitations of Liability
- * YOU ASSUME ALL RISK ASSOCIATED WITH THE INSTALLATION AND USE OF THE SOFTWARE. 
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS OF THE SOFTWARE BE LIABLE FOR CLAIMS, DAMAGES OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE. 
- * LICENSE HOLDERS ARE SOLELY RESPONSIBLE FOR DETERMINING THE APPROPRIATENESS OF USE AND ASSUME ALL RISKS ASSOCIATED WITH ITS USE, 
- * INCLUDING BUT NOT LIMITED TO THE RISKS OF PROGRAM ERRORS, DAMAGE TO EQUIPMENT, LOSS OF DATA OR SOFTWARE PROGRAMS, OR UNAVAILABILITY OR INTERRUPTION OF OPERATIONS.
+ *                                   ATTENTION!
+ * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
+ * this means that PHP is not properly installed on your web server. Please refer to the PHP manual
+ * for more details: http://php.net/manual/install.php 
+ *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 
@@ -31,7 +14,7 @@
     CheckTemplatesCacheFolderIsExistsAndWritable();
 
 
-    include_once dirname(__FILE__) . '/' . 'app_settings.php';
+    include_once dirname(__FILE__) . '/' . 'phpgen_settings.php';
     include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
     include_once dirname(__FILE__) . '/' . 'components/page.php';
     include_once dirname(__FILE__) . '/' . 'authorization.php';
@@ -108,7 +91,6 @@
             $field = new IntegerField('admin_flag');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('programm_id', 'program', new IntegerField('program_id', null, null, true), new StringField('program_name', 'programm_id_program_name', 'programm_id_program_name_program'), 'programm_id_program_name_program');
         }
     
         protected function DoPrepare() {
@@ -118,9 +100,9 @@
         protected function AddFieldColumns(Grid $grid)
         {
             //
-            // View column for program_name field
+            // View column for programm_id field
             //
-            $column = new TextViewColumn('programm_id_program_name', 'Project Type', $this->dataset);
+            $column = new TextViewColumn('programm_id', 'Project Type', $this->dataset);
             $column->SetOrderable(false);
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
@@ -311,7 +293,6 @@
             $field = new IntegerField('admin_flag');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('programm_id', 'program', new IntegerField('program_id', null, null, true), new StringField('program_name', 'programm_id_program_name', 'programm_id_program_name_program'), 'programm_id_program_name_program');
         }
     
         protected function DoPrepare() {
@@ -343,7 +324,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('projectDetailEdit0programssearch', $this->dataset,
-                array('programm_id_program_name', 'project_name', 'date_start', 'date_end', 'notes', 'priority', 'lead', 'approved_budget'),
+                array('programm_id', 'project_name', 'date_start', 'date_end', 'notes', 'priority', 'lead', 'approved_budget'),
                 array($this->RenderText('Project Type'), $this->RenderText('Project Name'), $this->RenderText('Date Start'), $this->RenderText('Date End'), $this->RenderText('Notes'), $this->RenderText('Priority'), $this->RenderText('Lead'), $this->RenderText('Approved Budget')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -364,36 +345,7 @@
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('projectDetailEdit0programasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
-            $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
-                GetConnectionOptions(),
-                '`program`');
-            $field = new IntegerField('program_id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('program_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('year');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('multi');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('description');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('lead');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('date_start');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('date_end');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('progress');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notes');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('program_name', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('programm_id', $this->RenderText('Project Type'), $lookupDataset, 'program_id', 'program_name', false, 8));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('programm_id', $this->RenderText('Project Type')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('project_name', $this->RenderText('Project Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('date_start', $this->RenderText('Date Start'), 'Y-m-d'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('date_end', $this->RenderText('Date End'), 'Y-m-d'));
@@ -423,9 +375,9 @@
         protected function AddFieldColumns(Grid $grid)
         {
             //
-            // View column for program_name field
+            // View column for programm_id field
             //
-            $column = new TextViewColumn('programm_id_program_name', 'Project Type', $this->dataset);
+            $column = new TextViewColumn('programm_id', 'Project Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
@@ -506,9 +458,9 @@
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
-            // View column for program_name field
+            // View column for programm_id field
             //
-            $column = new TextViewColumn('programm_id_program_name', 'Project Type', $this->dataset);
+            $column = new TextViewColumn('programm_id', 'Project Type', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -575,40 +527,7 @@
             // Edit column for programm_id field
             //
             $editor = new ComboBox('programm_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
-                GetConnectionOptions(),
-                '`program`');
-            $field = new IntegerField('program_id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('program_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('year');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('multi');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('description');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('lead');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('date_start');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('date_end');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('progress');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notes');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('program_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Project Type', 
-                'programm_id', 
-                $editor, 
-                $this->dataset, 'program_id', 'program_name', $lookupDataset);
+            $editColumn = new CustomEditColumn('Project Type', 'programm_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -687,40 +606,7 @@
             // Edit column for programm_id field
             //
             $editor = new ComboBox('programm_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
-                GetConnectionOptions(),
-                '`program`');
-            $field = new IntegerField('program_id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('program_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('year');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('multi');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('description');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('lead');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('date_start');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('date_end');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('progress');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notes');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('program_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Project Type', 
-                'programm_id', 
-                $editor, 
-                $this->dataset, 'program_id', 'program_name', $lookupDataset);
+            $editColumn = new CustomEditColumn('Project Type', 'programm_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -806,9 +692,9 @@
         protected function AddPrintColumns(Grid $grid)
         {
             //
-            // View column for program_name field
+            // View column for programm_id field
             //
-            $column = new TextViewColumn('programm_id_program_name', 'Project Type', $this->dataset);
+            $column = new TextViewColumn('programm_id', 'Project Type', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -868,9 +754,9 @@
         protected function AddExportColumns(Grid $grid)
         {
             //
-            // View column for program_name field
+            // View column for programm_id field
             //
-            $column = new TextViewColumn('programm_id_program_name', 'Project Type', $this->dataset);
+            $column = new TextViewColumn('programm_id', 'Project Type', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -972,7 +858,7 @@
             $this->SetHidePageListByDefault(false);
             $this->SetExportToExcelAvailable(true);
             $this->SetExportToWordAvailable(true);
-            $this->SetExportToXmlAvailable(false);
+            $this->SetExportToXmlAvailable(true);
             $this->SetExportToCsvAvailable(true);
             $this->SetExportToPdfAvailable(true);
             $this->SetPrinterFriendlyAvailable(true);
@@ -1065,7 +951,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('notes');
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('lead', 'staff', new StringField('username'), new StringField('username', 'lead_username', 'lead_username_staff'), 'lead_username_staff');
         }
     
         protected function DoPrepare() {
@@ -1110,10 +995,12 @@
                 $result->AddPage(new PageLink($this->RenderText('View Pay Period'), 'View_Pay_Period.php', $this->RenderText(''), $currentPageCaption == $this->RenderText('View Pay Period'), false, $this->RenderText('Default')));
             if (GetCurrentUserGrantForDataSource('department_projects')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Department Projects'), 'department_projects.php', $this->RenderText('Department Projects'), $currentPageCaption == $this->RenderText('Department Projects'), false, $this->RenderText('Default')));
+            if (GetCurrentUserGrantForDataSource('Multiple Time Entry')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Multiple Time Entry'), 'multiple_time_entry.php', $this->RenderText('Multiple Time Entry'), $currentPageCaption == $this->RenderText('Multiple Time Entry'), false, $this->RenderText('Default')));
             
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() ) {
               $result->AddGroup('Admin area');
-              $result->AddPage(new PageLink($this->GetLocalizerCaptions()->GetMessageString('AdminPage'), 'app_admin.php', $this->GetLocalizerCaptions()->GetMessageString('AdminPage'), false, false, 'Admin area'));
+              $result->AddPage(new PageLink($this->GetLocalizerCaptions()->GetMessageString('AdminPage'), 'phpgen_admin.php', $this->GetLocalizerCaptions()->GetMessageString('AdminPage'), false, false, 'Admin area'));
             }
             return $result;
         }
@@ -1127,7 +1014,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('programssearch', $this->dataset,
-                array('program_name', 'description', 'lead_username', 'date_start', 'date_end'),
+                array('program_name', 'description', 'lead', 'date_start', 'date_end'),
                 array($this->RenderText(' Name'), $this->RenderText('Description'), $this->RenderText('Lead'), $this->RenderText('Date Start'), $this->RenderText('Date End')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -1150,37 +1037,7 @@
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('program_name', $this->RenderText(' Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('description', $this->RenderText('Description')));
-            
-            $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
-                GetConnectionOptions(),
-                '`staff`');
-            $field = new IntegerField('staff_id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('username');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('picture');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('password');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('dept_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('position');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('emp_number');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('username', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('lead', $this->RenderText('Lead'), $lookupDataset, 'username', 'username', false, 8));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('lead', $this->RenderText('Lead')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('date_start', $this->RenderText('Date Start'), 'Y-m-d'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('date_end', $this->RenderText('Date End'), 'Y-m-d'));
         }
@@ -1208,8 +1065,8 @@
                 $grid->AddViewColumn($column, $actionsBandName);
                 $column->SetImagePath('images/delete_action.png');
                 $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
-            $column->SetAdditionalAttribute("data-modal-delete", "true");
-            $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
+                $column->SetAdditionalAttribute('data-modal-delete', 'true');
+                $column->SetAdditionalAttribute('data-delete-handler-name', $this->GetModalGridDeleteHandler());
             }
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
@@ -1251,12 +1108,12 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for username field
+            // View column for lead field
             //
-            $column = new TextViewColumn('lead_username', 'Lead', $this->dataset);
+            $column = new TextViewColumn('lead', 'Lead', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('programGrid_username_handler_list');
+            $column->SetFullTextWindowHandlerName('programGrid_lead_handler_list');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1301,12 +1158,12 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for username field
+            // View column for lead field
             //
-            $column = new TextViewColumn('lead_username', 'Lead', $this->dataset);
+            $column = new TextViewColumn('lead', 'Lead', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('programGrid_username_handler_view');
+            $column->SetFullTextWindowHandlerName('programGrid_lead_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1353,41 +1210,7 @@
             // Edit column for lead field
             //
             $editor = new ComboBox('lead_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
-                GetConnectionOptions(),
-                '`staff`');
-            $field = new IntegerField('staff_id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('username');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('picture');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('password');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('dept_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('position');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('emp_number');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('username', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Lead', 
-                'lead', 
-                $editor, 
-                $this->dataset, 'username', 'username', $lookupDataset);
-            $editColumn->SetCaptionTemplate($this->RenderText('%username%'));
+            $editColumn = new CustomEditColumn('Lead', 'lead', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1441,41 +1264,7 @@
             // Edit column for lead field
             //
             $editor = new ComboBox('lead_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
-                GetConnectionOptions(),
-                '`staff`');
-            $field = new IntegerField('staff_id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('username');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('picture');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('password');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('dept_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('position');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('emp_number');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('username', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Lead', 
-                'lead', 
-                $editor, 
-                $this->dataset, 'username', 'username', $lookupDataset);
-            $editColumn->SetCaptionTemplate($this->RenderText('%username%'));
+            $editColumn = new CustomEditColumn('Lead', 'lead', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1638,12 +1427,12 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for username field
+            // View column for lead field
             //
-            $column = new TextViewColumn('lead_username', 'Lead', $this->dataset);
+            $column = new TextViewColumn('lead', 'Lead', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('programGrid_username_handler_list');
+            $column->SetFullTextWindowHandlerName('programGrid_lead_handler_list');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -1761,7 +1550,7 @@
             $this->SetHidePageListByDefault(false);
             $this->SetExportToExcelAvailable(true);
             $this->SetExportToWordAvailable(true);
-            $this->SetExportToXmlAvailable(false);
+            $this->SetExportToXmlAvailable(true);
             $this->SetExportToCsvAvailable(true);
             $this->SetExportToPdfAvailable(true);
             $this->SetPrinterFriendlyAvailable(true);
@@ -1798,11 +1587,11 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'programGrid_description_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for username field
+            // View column for lead field
             //
-            $column = new TextViewColumn('lead_username', 'Lead', $this->dataset);
+            $column = new TextViewColumn('lead', 'Lead', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'programGrid_username_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'programGrid_lead_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for description field
             //
@@ -1811,11 +1600,11 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'programGrid_description_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for username field
+            // View column for lead field
             //
-            $column = new TextViewColumn('lead_username', 'Lead', $this->dataset);
+            $column = new TextViewColumn('lead', 'Lead', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'programGrid_username_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'programGrid_lead_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
