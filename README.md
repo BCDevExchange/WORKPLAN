@@ -46,9 +46,6 @@ psswd: manager1
 user: Manager Two
 psswd: manager2
 
-user: Manager Three
-psswd: manager3
-
 Note the  "admin" account must be record 1 (in the staff table) as there are a few hard coded references to %CURRENT_USER_ID%
 
 Workplan uses Smarty 2 which allows a template based system. to customize reports, charts etc look into:
